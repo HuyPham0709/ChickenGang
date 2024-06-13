@@ -438,6 +438,7 @@ header .navigation .navigation-items a:hover:before{
   } 
   .product-container{
     margin: 40px;
+    
   }
   .product-card{
     display: flex;
