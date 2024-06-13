@@ -170,6 +170,9 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
     <style>
+        body{
+            background-color: #e8f5ff;
+        }
 .headweb{
     font-weight: 200;
      border-bottom: 1px solid black; 

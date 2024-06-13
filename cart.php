@@ -74,6 +74,9 @@ if ($result->num_rows > 0) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="cart.js"></script>
     <style>
+        body{
+            background-color: #e8f5ff;
+        }
          @media screen and (max-width: 550px){
              .item{
                 display: flex;

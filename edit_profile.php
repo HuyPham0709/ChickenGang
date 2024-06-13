@@ -18,23 +18,18 @@ if ($result_customer) {
     exit();
 }
 
-// Xử lý dữ liệu khi người dùng cập nhật thông tin
+// Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy dữ liệu từ form và cập nhật vào database
-    $new_email = $_POST['email'];
-    $new_phone = $_POST['phone'];
-    $new_address = $_POST['address'];
+    $new_email = mysqli_real_escape_string($conn, $_POST['email']);
+    $new_phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $new_address = mysqli_real_escape_string($conn, $_POST['address']);
 
-    // Cập nhật thông tin mới vào database
     $query_update = "UPDATE customer SET email='$new_email', phone_number='$new_phone', address='$new_address' WHERE id_User=" . $user['id_User'];
     $result_update = mysqli_query($conn, $query_update);
 
     if ($result_update) {
-        echo '<script>alert("Cập nhật thông tin thành công!");</script>';
-        // Cập nhật lại thông tin hiển thị trên trang (nếu cần thiết)
-        // Ví dụ: $user['email'] = $new_email;
-        // Cập nhật biến session nếu cần thiết
-        // Ví dụ: $_SESSION['email'] = $new_email;
+        echo '<script>alert("Cập nhật thông tin thành công!"); window.location.href = "profile.php";</script>';
+        // You might also update the $user array here if needed
     } else {
         echo "Lỗi khi cập nhật thông tin: " . mysqli_error($conn);
     }
@@ -397,19 +392,17 @@ body {
                                 <td>:</td>
                                 <td>
                                     <div class="form">
-                                        <input class="input" placeholder="Type your text" required="" type="text" name="email" value="<?= $user['email'] ?>">
+                                        <input class="input" type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
                                         <span class="input-border"></span>
                                     </div>
-                                </div>
                                 </td>
-                                
                             </tr>
                             <tr>
                                 <td>Address</td>
                                 <td>:</td>
                                 <td>
                                     <div class="form">
-                                        <input class="input" placeholder="Type your text" required="" type="text"  name="address" value="<?= $user['address'] ?>">
+                                        <input class="input" type="text" name="address" value="<?= htmlspecialchars($user['address']) ?>" required>
                                         <span class="input-border"></span>
                                     </div>
                                 </td>
@@ -419,16 +412,14 @@ body {
                                 <td>:</td>
                                 <td>
                                     <div class="form">
-                                        <input class="input" placeholder="Type your text" required="" type="text"  name="phone" value="<?= $user['phone_number'] ?>">
+                                        <input class="input" type="tel" name="phone" value="<?= htmlspecialchars($user['phone_number']) ?>" required>
                                         <span class="input-border"></span>
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="submit">
-                        Save Changes
-                    </button>
+                    <button type="submit">Save Changes</button>
                 </form>
             </div>
         </div>

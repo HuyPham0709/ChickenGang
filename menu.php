@@ -134,6 +134,11 @@
             }
             .container-menu .menu {
                 display: inline;
+                margin: 0 1rem;
+                list-style: none;
+                flex-wrap: wrap;
+                z-index: 999999999999999999;
+                background-color: #ffff;
             }
             .container_wrapper {
                 display: inline;
@@ -141,7 +146,7 @@
             .navigation-card {
                 display: flex;
                 position: fixed;
-                bottom: 10px;
+                bottom: 10%;
                 left: 50%;
                 transform: translateX(-50%);
                 width: fit-content;
