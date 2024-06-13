@@ -75,45 +75,45 @@
         .navigation-card {
             display: none;
         }
-        .group {
-  display: flex;
-  line-height: 28px;
-  align-items: center;
-  position: relative;
-  max-width: 190px;
-}
-.input {
-  height: 40px;
-  line-height: 28px;
-  padding: 0 1rem;
-  padding-left: 2.5rem;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  outline: none;
-  background-color: #f3f3f4;
-  color: #0d0c22;
-  transition: 0.3s ease;
-}
+        .menu_item .group {
+            display: flex;
+            line-height: 28px;
+            align-items: center;
+            position: relative;
+            max-width: 190px;
+            }
+            .menu_item .input {
+            height: 40px;
+            line-height: 28px;
+            padding: 0 1rem;
+            padding-left: 2.5rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            outline: none;
+            background-color: #f3f3f4;
+            color: #0d0c22;
+            transition: 0.3s ease;
+            }
 
-.input::placeholder {
-  color: #9e9ea7;
-}
+            .menu_item .input::placeholder {
+            color: #9e9ea7;
+            }
 
-.input:focus,
-input:hover {
-  outline: none;
-  border-color: rgba(247, 127, 0, 0.4);
-  background-color: #fff;
-  box-shadow: 0 0 0 4px rgb(247 127 0 / 10%);
-}
+            .menu_item .input:focus,
+            .menu_item .input:hover {
+            outline: none;
+            border-color: rgba(247, 127, 0, 0.4);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgb(247 127 0 / 10%);
+            }
 
-.menu_item .icon {
-  position: absolute;
-  fill: #9e9ea7;
-  left: 1rem;
-  width: 1rem;
-  height: 1rem;
-}
+            .menu_item .icon {
+            position: absolute;
+            fill: #9e9ea7;
+            left: 1rem;
+            width: 1rem;
+            height: 1rem;
+            }
         @media screen and (max-width: 1040px) {
             .container-menu {
                 display: none;
@@ -200,11 +200,11 @@ input:hover {
                 </li>
                 <li class="menu_item" style="font-size: 25px;margin-left:40px" id="cart_icon"><i class='bx bx-cart-alt'></i></li>
                 <li class="menu_item">
-                <?php if(isset($_SESSION['username'])){ ?>
-    <a href="profile.php" style="font-size: 25px;color:black;"><i class='bx bx-user-circle'></i></a>
-<?php } else { ?>
-    <a href="login.php" class="menu_link" style="font-weight: 600">Login</a>
-<?php } ?>
+                    <?php if(isset($_SESSION['username'])){ ?>
+                        <a href="profile.php" style="font-size: 25px;color:black;"><i class='bx bx-user-circle'></i></a>
+                    <?php } else { ?>
+                        <a href="login.php" class="menu_link" style="font-weight: 600">Login</a>
+                    <?php } ?>
                 </li>
             </ul>
         </div>
