@@ -308,7 +308,7 @@ body {
                             <td><?= htmlspecialchars($item['status']) ?></td>
                             <td><?= htmlspecialchars($item['total_money']) ?></td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach; ?> 
                     </tbody>
                 </table>
             </div>
