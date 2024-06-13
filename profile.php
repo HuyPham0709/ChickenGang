@@ -233,6 +233,14 @@ body {
 .cart-table th{
     margin: 20px;
 }
+.text-center {
+    text-align: center;
+}
+.cart-table th,
+    .cart-table td {
+        text-align: center;
+        padding: 10px; /* Để cân đối khoảng cách nếu cần thiết */
+    }
     </style>
 <head>
     <meta charset="UTF-8">
@@ -252,10 +260,9 @@ body {
 
     <!-- Main -->
     <div class="main">
-        <h2>IDENTITY</h2>
+        <h2>IDENTITY <a href="edit_profile.php"><i class="fa fa-edit edit"></i></a></h2>
         <div class="card">
             <div class="card-body">
-                <i class="fa fa-pen fa-xs edit"></i>
                 <table>
                     <tbody>
                         <tr>
@@ -288,25 +295,25 @@ body {
                 <table class="cart-table">
                     <thead>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Color</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Order Date</th>
-                            <th>Status</th>
-                            <th>Total Money</th>
+                            <th class="text-center">Product Name</th>
+                            <th class="text-center">Color</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Order Date</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Total Money</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($cart_items as $item): ?>
                         <tr>
-                            <td><?= htmlspecialchars($item['product_name']) ?></td>
-                            <td><?= htmlspecialchars($item['color']) ?></td>
-                            <td><?= htmlspecialchars($item['Quantity']) ?></td>
-                            <td><?= htmlspecialchars($item['price']) ?></td>
-                            <td><?= htmlspecialchars($item['order_date']) ?></td>
-                            <td><?= htmlspecialchars($item['status']) ?></td>
-                            <td><?= htmlspecialchars($item['total_money']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($item['product_name']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($item['color']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($item['Quantity']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($item['price']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($item['order_date']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($item['status']) ?></td>
+                            <td class="text-center"><?= htmlspecialchars($item['total_money']) ?></td>
                         </tr>
                         <?php endforeach; ?> 
                     </tbody>
