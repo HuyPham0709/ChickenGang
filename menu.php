@@ -56,6 +56,7 @@
             z-index: 1000;
             display: flex;
             justify-content: space-around;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
         .container_wrapper {
@@ -74,7 +75,45 @@
         .navigation-card {
             display: none;
         }
+        .group {
+  display: flex;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+  max-width: 190px;
+}
+.input {
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  padding-left: 2.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: 0.3s ease;
+}
 
+.input::placeholder {
+  color: #9e9ea7;
+}
+
+.input:focus,
+input:hover {
+  outline: none;
+  border-color: rgba(247, 127, 0, 0.4);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgb(247 127 0 / 10%);
+}
+
+.menu_item .icon {
+  position: absolute;
+  fill: #9e9ea7;
+  left: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
         @media screen and (max-width: 1040px) {
             .container-menu {
                 display: none;
@@ -132,32 +171,41 @@
                 <li class="menu_item"><a href="./index.php" class="menu_link">HOME</a></li>
                 <li class="menu_item"><a href="./all-product.php" class="menu_link">All PRODUCT</a></li>
                 <li class="menu_item"><a href="./Lazy.php" class="menu_link">LAZY THINK COLLECTION</a></li>
-                <li class="menu_item"><a href="" class="menu_link">LEVENTS®</a></li>
+                <li class="menu_item"><a href="./Levent.php" class="menu_link">LEVENTS®</a></li>
                 <li class="menu_item">
                     <a href="" class="menu_link">SHOP</a><i class='bx bxs-down-arrow'></i>
                     <div class="menu_child">
                         <ul class="menu_child-list">
                             <li><a href=""><button class="cssbuttons-io"><span>BEST SELLER</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>ALL ITEM</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>T-SHIRT</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>SHIRT</span></button></a></li>
+                            <li><a href="./Item.php"><button class="cssbuttons-io"><span>ALL ITEM</span></button></a></li>
+                            <li><a href="./shirt.php"><button class="cssbuttons-io"><span>SHIRT</span></button></a></li>
                             <li><a href=""><button class="cssbuttons-io"><span>OUTERWEAR</span></button></a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="menu_item">
-                    <a href="" class="menu_link">COLLECTION</a><i class='bx bxs-down-arrow'></i>
-                    <div class="menu_child">
-                        <ul class="menu_child-list">
-                            <li><a href=""><button class="cssbuttons-io"><span>FREEFALL</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>REMAKE</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>BASIC</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>LUCKY</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>STEPOUT</span></a></li>
-                        </ul>
-                    </div>
+                    <!-- Search Form -->
+                    <form method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <div class="group">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
+                                <g>
+                                <path
+                                    d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+                                ></path>
+                                </g>
+                            </svg>
+                            <input class="input" type="text" name="search" placeholder="Search products..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                        </div>
+                    </form>
                 </li>
-                <li class="menu_item" style="font-size: 25px;" id="cart_icon"><i class='bx bx-cart-alt'></i></li>
+                <li class="menu_item" style="font-size: 25px;margin-left:40px" id="cart_icon"><i class='bx bx-cart-alt'></i></li>
+                <li class="menu_item">
+                <?php if(isset($_SESSION['username'])){ ?>
+    <a href="profile.php" style="font-size: 25px;color:black;"><i class='bx bx-user-circle'></i></a>
+<?php } else { ?>
+    <a href="login.php" class="menu_link" style="font-weight: 600">Login</a>
+<?php } ?>
+                </li>
             </ul>
         </div>
     </section>

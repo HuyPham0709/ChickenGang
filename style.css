@@ -436,6 +436,14 @@ header .navigation .navigation-items a:hover:before{
   .cssbuttons-io:active {
     transform: scale(0.95);
   } 
+  .product-container{
+    margin: 40px;
+  }
+  .product-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
   .product-card {
     position: relative;
     max-width: 280px;
@@ -445,6 +453,7 @@ header .navigation .navigation-items a:hover:before{
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     z-index: 3;
     overflow: hidden;
+    margin: 10px;
   }
   .product-card .logo-cart{
     display: flex;
@@ -631,7 +640,11 @@ header .navigation .navigation-items a:hover:before{
   .color-option .circles .circle.white.active{
     box-shadow: 0 0 0 2px #fff,
                 0 0 0 4px #EEEEEE;
-}
+  }
+  .color-option .circles .circle.bisque.active{
+    box-shadow: 0 0 0 2px #fff,
+                0 0 0 4px bisque;
+  }
   .color-price .price{
     display: flex;
     flex-direction: column;
@@ -1733,7 +1746,3 @@ form.sign-in-form-login {
         font-size: 0.9rem;
     }
 }
-
-/* khoi tao 
-1. git innit  */
-/* hieu upload */

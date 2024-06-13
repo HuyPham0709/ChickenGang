@@ -22,7 +22,7 @@
     $sql = "SELECT p.*, pi.image_path, pi.color 
             FROM Products p
             LEFT JOIN Product_Image pi ON p.id_Product = pi.product_id
-            WHERE p.collection = 'LAZY'";
+            WHERE p.category = 'item'";
     $result = $conn->query($sql);
 
     // Khởi tạo một mảng để lưu trữ các màu cho mỗi sản phẩm
@@ -236,7 +236,7 @@ input:hover {
     <?php include "menu.php"; ?>
     <div class="headweb">
         <!-- Search Form -->
-        <h2  style="font-weight: 200;">LAZY THINK COLLECTION</h2>
+        <h2  style="font-weight: 200;">ALL ITEM</h2>
     </div>
     </h2>
     <section class="product-container">

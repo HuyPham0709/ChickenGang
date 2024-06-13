@@ -178,49 +178,6 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
     <style>
-        .group {
-  display: flex;
-  line-height: 28px;
-  align-items: center;
-  position: relative;
-  max-width: 190px;
-}
-.product-container{
-    margin: 20px;
-}
-.input {
-  /* width: 100%; */
-  height: 40px;
-  line-height: 28px;
-  padding: 0 1rem;
-  padding-left: 2.5rem;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  outline: none;
-  background-color: #f3f3f4;
-  color: #0d0c22;
-  transition: 0.3s ease;
-}
-
-.input::placeholder {
-  color: #9e9ea7;
-}
-
-.input:focus,
-input:hover {
-  outline: none;
-  border-color: rgba(247, 127, 0, 0.4);
-  background-color: #fff;
-  box-shadow: 0 0 0 4px rgb(247 127 0 / 10%);
-}
-
-.icon {
-  position: absolute;
-  left: 1rem;
-  fill: #9e9ea7;
-  width: 1rem;
-  height: 1rem;
-}
 .headweb{
     font-weight: 200;
      border-bottom: 1px solid black; 
@@ -245,25 +202,12 @@ input:hover {
 <body>
     <?php include "menu.php"; ?>
     <div class="headweb">
-        <!-- Search Form -->
-        <form method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <div class="group">
-                <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
-                    <g>
-                    <path
-                        d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
-                    ></path>
-                    </g>
-                </svg>
-                <input class="input" type="text" name="search" placeholder="Search products..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-            </div>
-        </form>
         <h2  style="font-weight: 200;">All Products</h2>
     </div>
     <section class="product-container">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="display: flex; flex-wrap: wrap; justify-content: center;">
             <?php foreach ($products as $index => $product): ?>
-                <div class="product-card" style="margin: 10px">
+                <div class="product-card">
                     <input type="hidden" name="products[<?= $index; ?>][id]" value="<?= $product['id']; ?>">
                     <input type="hidden" name="products[<?= $index; ?>][name]" value="<?= $product['name']; ?>">
                     <input type="hidden" name="products[<?= $index; ?>][price]" value="<?= $product['price']; ?>">

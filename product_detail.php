@@ -5,10 +5,182 @@
     // Bắt đầu hoặc khôi phục phiên
     session_start();
 
+    // Khởi tạo giỏ hàng nếu chưa tồn tại trong session
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
 
-    // Lấy ID người dùng từ session hoặc phương thức khác
+    // Xử lý yêu cầu xóa sản phẩm khỏi giỏ hàng
+    if (isset($_POST['remove_item'])) {
+        $index = $_POST['index'];
+        unset($_SESSION['cart'][$index]);
+        header("Location: cart.php");
+        exit();
+    }
+
+    // Xử lý tìm kiếm sản phẩm
+    $searchTerm = '';
+    if (isset($_GET['search'])) {
+        $searchTerm = $conn->real_escape_string($_GET['search']);
+    }
+
+    // Lấy danh sách sản phẩm từ cơ sở dữ liệu
+    $sql = "SELECT p.*, pi.image_path, pi.color 
+            FROM Products p
+            LEFT JOIN Product_Image pi ON p.id_Product = pi.product_id";
+    if (!empty($searchTerm)) {
+        $sql .= " WHERE p.product_name LIKE '%$searchTerm%' OR p.description LIKE '%$searchTerm%'";
+    }
+    $result = $conn->query($sql);
+
+    // Khởi tạo một mảng để lưu trữ các màu cho mỗi sản phẩm
+    $products = array();
+
+    // Khởi tạo mảng $colors để lưu trữ tất cả các màu
+    $colors = array();
+
+    // Kiểm tra và gán dữ liệu cho biến $products và $colors
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $product_id = $row['id_Product'];
+            if (!isset($products[$product_id])) {
+                // Nếu sản phẩm chưa được thêm vào mảng $products, thì thêm sản phẩm đó vào mảng
+                $products[$product_id] = array(
+                    'id' => $row['id_Product'],
+                    'name' => $row['product_name'],
+                    'description' => $row['description'],
+                    'price' => $row['price'],
+                    'quantity' => $row['quantity'],
+                    'created_at' => $row['created_at'],
+                    'update_at' => $row['update_at'],
+                    'images' => array(), // Mảng để lưu trữ các hình ảnh của sản phẩm
+                    'colors' => array() // Mảng để lưu trữ các màu của sản phẩm
+                );
+            }
+
+            // Thêm hình ảnh vào mảng images của sản phẩm
+            if (!empty($row['color']) && !empty($row['image_path'])) {
+                $products[$product_id]['images'][$row['color']] = $row['image_path'];
+                
+                // Nếu màu chưa được thêm vào mảng colors của sản phẩm, thì thêm màu đó vào mảng
+                if (!in_array($row['color'], $products[$product_id]['colors'])) {
+                    $products[$product_id]['colors'][] = $row['color'];
+                    
+                    // Đồng thời cập nhật màu vào mảng $colors nếu chưa tồn tại
+                    if (!in_array($row['color'], $colors)) {
+                        $colors[] = $row['color'];
+                    }
+                }
+            }
+        }
+    } else {
+        echo "Không có dữ liệu trong bảng Products";
+    }
+    
+    // Khai báo biến $css trước khi sử dụng
+    $css = '';
+    foreach ($colors as $color) {
+        
+        $css .= "
+        .product-card .color-price .color-option{
+            display: flex;
+            align-items: center;
+        }
+        .color-price{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .color-price .color-option .color{
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            margin-right: 8px;
+        }
+        .color-option .circles{
+            display: flex;
+        }
+        .color-option .circles .circle{
+            height: 18px;
+            width: 18px;
+            background: $color;
+            border-radius: 50%;
+            margin: 0 4px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .color-option .circles .circle.$color.active{
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px $color;
+        }
+        .color-price .price{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 10px;
+        }
+        .color-price .price .price_num{
+            font-size: 25px;
+            font-weight: 600;
+            color: #707070;
+        }
+        .color-price .price .price_letter{
+            font-size: 10px;
+            font-weight: 600;
+            margin-top: -4px;
+            color: #707070;
+        }
+        .color-option  .circles .circle.$color.active{
+            box-shadow: 0 0 0 2px #fff,
+                        0 0 0 4px $color;
+        }
+        .color-option  .circles .circle.$color{
+            background: $color;
+        }";
+        
+    }
+
+    // Xử lý dữ liệu gửi từ biểu mẫu
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        foreach ($_POST['products'] as $index => $product) {
+            if (isset($_POST['add_to_cart_' . $index])) {
+                $product_id = $product['id'];
+                $product_name = $product['name'];
+                $price = $product['price'];
+                $color = $_POST['products'][$index]['color'];
+                $quantity = $_POST['products'][$index]['num'];
+                $image_path = $product['image_path'];
+
+                // Tạo một mảng chứa thông tin sản phẩm
+                $item = array(
+                    'id' => $product_id,
+                    'name' => $product_name,
+                    'price' => $price,
+                    'color' => $color,
+                    'quantity' => $quantity,
+                    'image_path' => $image_path
+                );
+
+                // Thêm sản phẩm vào giỏ hàng
+                $_SESSION['cart'][] = $item;
+
+                // Hiển thị thông báo thành công
+                echo "<script>alert('Add to cart successfully!');</script>";
+            }
+        }
+    }
+?>
+<?php
+    if (!isset($_SESSION['user_id'])) {
+        // Nếu chưa đăng nhập, hiển thị thông báo và chuyển hướng về trang đăng nhập
+        echo "<script>
+                alert('You are not logged in! Please log in.');
+                window.location.href = 'login.php';
+              </script>";
+        exit();
+    }
+
+    // Lấy ID người dùng từ session
     $user_id = $_SESSION['user_id'];
-
     // Lấy ID sản phẩm từ tham số truy vấn
     $product_id = $_GET['id'];
 
@@ -58,7 +230,7 @@
         exit();
     }
     // Hàm lấy sản phẩm gợi ý
-function getRecommendedProducts($conn, $user_id, $current_product_id) {
+    function getRecommendedProducts($conn, $user_id, $current_product_id) {
     // Lấy ID các sản phẩm đã xem bởi người dùng
     $sql = "SELECT DISTINCT product_id 
             FROM user_behavior 
@@ -410,7 +582,13 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
             .product-content{
                 padding-top: 0;
             }
-            
+            .product-card .main-images{
+                position:unset;
+            }
+            .product-card {
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                
+            }
         }
         @media screen and (max-width: 990px){
 
@@ -421,13 +599,17 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
             }
             .product-container{
                 display: flex;
-                justify-content: center;
-                align-items: center;
+                justify-content:space-between;
+                align-items:center;
+            }
+            .product-card{
+                height: 330px;
             }
         }
         @media screen and (max-width: 800px){
              .form{
                 display: block;
+                
             }
             .image{
                 display: flex;
@@ -440,18 +622,19 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
                 align-items: center;
                 flex-direction: column;
             }
+            
         }
     </style>
   </head>
   <body>
   <?php include"menu.php";?>
-    <div class="card-wrapper">
+    <div class="card-wrapper" style="margin: 40px;">
         <div class="card">
             <form action="add_to_cart.php" method="post" class="form">
                 <!-- card left -->
                 <div class="product-imgs">
                     <div class="img-display">
-                        <div class="img-showcase">
+                        <div class="img-showcase" style="max-width: 500px;">
                             <?php foreach ($product['images'] as $image): ?>
                                 <img src="img/<?= $image['image_path']; ?>" alt="<?= $image['color']; ?>">
                             <?php endforeach; ?>
@@ -460,7 +643,7 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
                     <div class="img-select">
                         <?php if (isset($product['images']) && is_array($product['images'])): ?>
                             <?php foreach ($product['images'] as $image): ?>
-                                <div class="img-item">
+                                <div class="img-item" style="max-width: 200px;">
                                     <a href="#" data-id="<?= $image['id']; ?>" data-color="<?= $image['color']; ?>" data-image-path="<?= $image['image_path']; ?>">
                                         <img src="img/<?= $image['image_path']; ?>" alt="<?= $image['color']; ?>">
                                     </a>
@@ -521,7 +704,7 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
                         if ($count >= 3) break; // Limit to 3 products
                         $count++; // Increment counter
                     ?>
-                        <div class="product-card" style="margin: 10px">
+                        <div class="product-card">
                             <a href="product_detail.php?id=<?= $product['id']; ?>">
                                 <div class="main-images">
                                     <?php 
@@ -538,7 +721,7 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
                             </div>
                             <div class="color-price">
                                 <div class="color-option">
-                                    <span class="color">Màu sắc:</span>
+                                    <span class="color">Colour:</span>
                                     <div class="circles">   
                                     <?php foreach ($product['colors'] as $color): ?>
                                         <span class="circle <?= $color === $firstColor ? $color . ' active' : $color; ?>" id="<?= $color; ?>" style="background-color: <?= $color === 'blue' ? '#0071C7' : ($color === 'pink' ? '#FF76CE' : ($color === 'white' ? '#EEEEEE' : ($color === 'yellow' ? '#F5DA00' : $color))); ?>;"></span>
@@ -547,7 +730,7 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
                                 </div>
                                 <div class="price">
                                     <span class="price_num"><?= $product['price']; ?></span>
-                                    <span class="price_letter">Chỉ <?= $product['price']; ?>$</span>
+                                    <span class="price_letter">JUST <?= $product['price']; ?>$</span>
                                 </div>
                             </div>
                         </div>
