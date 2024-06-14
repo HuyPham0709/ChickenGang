@@ -445,7 +445,7 @@ header .navigation .navigation-items a:hover:before{
   .product-card{
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content:space-around;
   }
   .product-card {
     position: relative;

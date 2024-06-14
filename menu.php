@@ -57,6 +57,7 @@
             display: flex;
             justify-content: space-around;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            
         }
 
         .container_wrapper {

@@ -247,7 +247,6 @@ while ($row = mysqli_fetch_assoc($result_cart)) {
             }
         .card-body{
             display: flex;
-            align-items: center;
             justify-content: center;
         }
     </style>

@@ -314,6 +314,7 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
         body{
             line-height: 1.5;
+            background-color: #e8f5ff;
         }
         <?php echo $css; ?>
             .color-option  .circles .circle.active{
@@ -562,17 +563,25 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
             .form{
                 display: flex;
             }
+            .card{
+                background-color: #fff;
+                padding: 50px;
+            }
         @media screen and (min-width: 992px){
             .card{
                 display: grid;
                 grid-template-columns: repeat(1, 1fr);
                 grid-gap: 1.5rem;
             }
+            .img-showcase{
+                display: flex;
+                max-width: 70%;
+                transition: all 0.5s ease;
+            }
             .card-wrapper{
-                height: 160vh;
+                /* height: 120vh; */
                 display: flex;
                 justify-content:space-around;
-                align-items: center;
             }
             .product-imgs{
                 display: flex;
