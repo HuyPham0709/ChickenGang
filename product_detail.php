@@ -729,12 +729,15 @@ $recommended_products = getRecommendedProducts($conn, $user_id, $current_product
                                 <p><?= $product['description']; ?></p>
                             </div>
                             <div class="color-price">
-                                <div class="color-option">
-                                    <span class="color">Colour:</span>
-                                    <div class="circles">   
-                                    <?php foreach ($product['colors'] as $color): ?>
-                                        <span class="circle <?= $color === $firstColor ? $color . ' active' : $color; ?>" id="<?= $color; ?>" style="background-color: <?= $color === 'blue' ? '#0071C7' : ($color === 'pink' ? '#FF76CE' : ($color === 'white' ? '#EEEEEE' : ($color === 'yellow' ? '#F5DA00' : $color))); ?>;"></span>
-                                    <?php endforeach; ?>
+                                    <div class="color-option">
+                                        <span class="color">Colour:</span>
+                                        <div class="circles">
+                                            <?php 
+                                            $uniqueColors = array_unique($product['colors']);
+                                            foreach ($uniqueColors as $color): 
+                                            ?>
+                                                <span class="circle <?= $color === $firstColor ? $color . ' active' : $color; ?>" id="<?= $color; ?>" style="background-color: <?= $color === 'blue' ? '#0071C7' : ($color === 'pink' ? '#FF76CE' : ($color === 'white' ? '#EEEEEE' : ($color === 'yellow' ? '#F5DA00' : $color))); ?>;"></span>
+                                            <?php endforeach; ?>
                                     </div>
                                 </div>
                                 <div class="price">

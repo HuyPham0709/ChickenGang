@@ -458,6 +458,17 @@ header .navigation .navigation-items a:hover:before{
     overflow: hidden;
     margin: 10px;
   }
+  .product-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .product-card {
+      flex: 1 1 calc(25% - 20px); /* Adjust the width of each product card */
+      margin: 10px;
+      box-sizing: border-box;
+  }
   .product-card .logo-cart{
     display: flex;
     align-items: center;

@@ -10,9 +10,10 @@ if (isset($_POST['checkout'])) {
     $card_number = mysqli_real_escape_string($conn, $_POST['card_number']);
     $expiry_date = mysqli_real_escape_string($conn, $_POST['expiry_date']);
     $cvv = mysqli_real_escape_string($conn, $_POST['cvv']);
-    $phone_number  = mysqli_real_escape_string($conn, $_POST['phone_number']);   
-    $address  = mysqli_real_escape_string($conn, $_POST['address']);
-    
+    $phone_number = mysqli_real_escape_string($conn, $_POST['phone_number']);
+    $address = mysqli_real_escape_string($conn, $_POST['address']);
+    $user_id = $_SESSION['user_id']; // Lấy user_id từ session
+
     // Tính tổng số tiền của đơn hàng từ giỏ hàng trong session
     $total_amount = 0;
     if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && !empty($_SESSION['cart'])) {
@@ -22,8 +23,8 @@ if (isset($_POST['checkout'])) {
     }
 
     // Thêm thông tin đơn hàng vào cơ sở dữ liệu
-    $insert_customer_query = "INSERT INTO Customer_Information (username, email, phone_number, address, card_number, expire_date, cvv)
-                     VALUES ('$username', '$email', '$phone_number', '$address', '$card_number', '$expiry_date', '$cvv')";
+    $insert_customer_query = "INSERT INTO Customer_Information (user_id, username, email, phone_number, address, card_number, expire_date, cvv)
+                     VALUES ('$user_id', '$username', '$email', '$phone_number', '$address', '$card_number', '$expiry_date', '$cvv')";
 
     if (mysqli_query($conn, $insert_customer_query)) {
         // Lấy ID của khách hàng vừa thêm vào
@@ -34,9 +35,7 @@ if (isset($_POST['checkout'])) {
             $product_name = mysqli_real_escape_string($conn, $item['name']);
             $price = $item['price'];
             $quantity = $item['quantity'];
-            // Lấy user_id từ session
-            $user_id = $_SESSION['user_id'];
-            $color = $item['color']; // Lấy thông tin màu sắc
+            $color = mysqli_real_escape_string($conn, $item['color']); // Lấy thông tin màu sắc
             
             // Tính toán total_money cho từng sản phẩm
             $total_money = $price * $quantity;
@@ -50,7 +49,10 @@ if (isset($_POST['checkout'])) {
 
         // Xóa giỏ hàng sau khi lưu thông tin đơn hàng thành công
         unset($_SESSION['cart']);
-       
+        echo "<script>alert('Thanh toán thành công.');</script>";
+        // Sau khi thông báo thành công, chuyển hướng người dùng về trang chủ
+        echo "<script>window.location.replace('index.php');</script>";
+        exit();
     } else {
         echo "Đã xảy ra lỗi khi lưu thông tin đơn hàng: " . mysqli_error($conn);
     }
@@ -101,8 +103,7 @@ if (isset($_POST['checkout'])) {
                 }
                 ?>
                 <tr>
-                    <td colspan="3"
-                    class="text-end"><strong>Total Amount</strong></td>
+                    <td colspan="3" class="text-end"><strong>Total Amount</strong></td>
                     <td><strong>$ <?= number_format($total_amount, 2) ?></strong></td>
                 </tr>
                 </tbody>
@@ -139,8 +140,8 @@ if (isset($_POST['checkout'])) {
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
                     <div class="mb-3">
-                        <label for="number" class="form-label">Number</label>
-                        <input type="text" class="form-control" id="number" name=" phone_number" required>
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" required>
                     </div>
                 </div>
                 <button type="submit" name="checkout">
