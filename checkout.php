@@ -50,10 +50,7 @@ if (isset($_POST['checkout'])) {
 
         // Xóa giỏ hàng sau khi lưu thông tin đơn hàng thành công
         unset($_SESSION['cart']);
-        echo "<script>alert('Thanh toán thành công.');</script>";
-        // Sau khi thông báo thành công, chuyển hướng người dùng về trang chủ
-        echo "<script>window.location.replace('index.php');</script>";
-        exit();
+       
     } else {
         echo "Đã xảy ra lỗi khi lưu thông tin đơn hàng: " . mysqli_error($conn);
     }
@@ -143,7 +140,7 @@ if (isset($_POST['checkout'])) {
                     </div>
                     <div class="mb-3">
                         <label for="number" class="form-label">Number</label>
-                        <input type="text" class="form-control" id="number" name="number" required>
+                        <input type="text" class="form-control" id="number" name=" phone_number" required>
                     </div>
                 </div>
                 <button type="submit" name="checkout">

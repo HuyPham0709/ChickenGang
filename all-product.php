@@ -178,15 +178,18 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
     <style>
-.headweb{
-    font-weight: 200;
-     border-bottom: 1px solid black; 
-     padding: 20px;
-      margin: 0 50px 50px 50px;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-    }
+        body{
+            background-color: #e8f5ff;
+        }
+        .headweb{
+        font-weight: 200;
+        border-bottom: 1px solid black; 
+        padding: 20px;
+        margin: 0 50px 50px 50px;
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-end;
+        }
 @media screen and (max-width: 1040px){
     .headweb{
         display: block;
