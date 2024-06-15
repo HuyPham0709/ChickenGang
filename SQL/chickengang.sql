@@ -193,6 +193,21 @@ CREATE TABLE `products` (
   `update_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `revenue` (
+  `id` int(11) NOT NULL,
+  `id_cart` int(11) NOT NULL,
+  `month` varchar(255) DEFAULT NULL,
+  `year` varchar(255) NOT NULL,
+  `amount` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `revenue`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_cart` (`id_cart`);
+
+
+ALTER TABLE `revenue`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- Đang đổ dữ liệu cho bảng `products`
 --
@@ -882,8 +897,7 @@ ALTER TABLE `product_image`
 ALTER TABLE `user_behavior`
   ADD CONSTRAINT `user_behavior_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `customer` (`id_User`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_behavior_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id_Product`) ON DELETE CASCADE;
+  ALTER TABLE `revenue`
+  ADD CONSTRAINT `revenue_ibfk_1` FOREIGN KEY (`id_cart`) REFERENCES `cart` (`id_Cart`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
