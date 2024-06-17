@@ -101,10 +101,9 @@ if ($result->num_rows > 0) {
                     <div class="item" style="display: flex;">
                         <div class="buttons">
                             <input type="hidden" name="index" value="<?= $index; ?>">
-                            <button type="button" onclick="removeFromCart(<?= $index; ?>)" class="delete-btn"><i class='bx bx-trash'></i></button>
+                            <button type="button" class="delete-btn"><i class='bx bx-trash'></i></button>
                             <span class="like-btn"></span>
                         </div>
-
                         <div class="image" style="width: 150px;height:150px">
                             <!-- Kiểm tra xem 'image_path' có tồn tại không -->
                             <?php if (isset($item['image_path'])): ?>
@@ -122,9 +121,13 @@ if ($result->num_rows > 0) {
                         <div class="quantity" style="display: flex;justify-content: center;align-items: center;">
                             <input type="hidden" name="cart[<?= $index; ?>][id]" value="<?= isset($item['id']) ? $item['id'] : ''; ?>">
                             <input type="hidden" name="cart[<?= $index; ?>][color]" value="<?= isset($item['color']) ? $item['color'] : ''; ?>">
-                            <button type="button" class="minus-btn" data-index="<?= $index; ?>"><i class='bx bx-minus'></i></button>
+                            <button type="button" class="minus-btn" data-index="<?= $index; ?>">
+                                <i class='bx bx-minus'></i>
+                            </button>
                             <input type="text" name="quantity[<?= $index; ?>]" value="<?= isset($item['quantity']) ? $item['quantity'] : ''; ?>" data-index="<?= $index; ?>" data-price="<?= isset($item['price']) ? $item['price'] : ''; ?>" class="quantity-input">
-                            <button type="button" class="plus-btn" data-index="<?= $index; ?>"><i class='bx bx-plus'></i></button>
+                            <button type="button" class="plus-btn" data-index="<?= $index; ?>">
+                                <i class='bx bx-plus'></i>
+                            </button>
                         </div>
 
                         <div class="total-price" style="display: flex;justify-content: center;align-items: center;" data-index="<?= $index; ?>">
@@ -133,7 +136,6 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <button type="submit" name="update_cart" class="btn btn-primary" style="width: 100px;height: 50px;float:right;margin-right:60px">Update Cart</button>
             </form>
             <a class="fancy" href="./checkout.php">
                 <span class="top-key"></span>
@@ -149,29 +151,11 @@ if ($result->num_rows > 0) {
     </div>
     
     <script>
-    $('.like-btn').on('click', function() {
-        $(this).toggleClass('is-active');
-    });
-
-    $('.minus-btn').on('click', function(e) {
-        e.preventDefault();
-        var $this = $(this);
-        var $input = $this.closest('div').find('input');
-        var value = parseInt($input.val());
-
-        if (value > 1) {
-            value = value - 1;
-        } else {
-            value = 1;
-        }
-
-        $input.val(value);
-    });
-
+        $(document).ready(function() {
     $('.plus-btn').on('click', function(e) {
         e.preventDefault();
         var $this = $(this);
-        var $input = $this.closest('div').find('input');
+        var $input = $this.closest('div').find('input.quantity-input');
         var value = parseInt($input.val());
 
         if (value < 100) {
@@ -181,18 +165,24 @@ if ($result->num_rows > 0) {
         }
 
         $input.val(value);
+        updateCart($this.data('index'), value);
     });
-    
-    function removeFromCart(index) {
-        $.ajax({
-            type: "POST",
-            url: "remove_from_cart.php",
-            data: { index: index },
-            success: function(data) {
-                location.reload(); // Tải lại trang để cập nhật giỏ hàng mới
-            }
-        });
-    }
+
+    $('.minus-btn').on('click', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var $input = $this.closest('div').find('input.quantity-input');
+        var value = parseInt($input.val());
+
+        if (value > 1) {
+            value = value - 1;
+        } else {
+            value = 1;
+        }
+
+        $input.val(value);
+        updateCart($this.data('index'), value);
+    });
 
     function updateCart(index, quantity) {
         $.ajax({
@@ -201,9 +191,38 @@ if ($result->num_rows > 0) {
             data: { index: index, quantity: quantity, update_cart: true },
             success: function(data) {
                 location.reload(); // Tải lại trang để cập nhật giỏ hàng mới
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
     }
+
+    function removeFromCart(index) {
+        $.ajax({
+            type: "POST",
+            url: "remove_from_cart.php",
+            data: { index: index },
+            success: function(data) {
+                var response = JSON.parse(data);
+                if (response.status === 'success') {
+                    location.reload(); // Tải lại trang để cập nhật giỏ hàng mới
+                } else {
+                    console.error(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    $('.delete-btn').on('click', function() {
+        var index = $(this).siblings('input[name="index"]').val();
+        removeFromCart(index);
+    });
+});
+
     </script>
 
 </body>

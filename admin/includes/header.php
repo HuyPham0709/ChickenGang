@@ -38,7 +38,9 @@ session_start();
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-                <img src="./img/icon.png" alt="" style="width:50px;">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
                 <div class="sidebar-brand-text mx-3">ChickenGang</div>
             </a>
 
@@ -149,9 +151,13 @@ session_start();
                         <li class="nav-item dropdown no-arrow">
                             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
                                 <a class="welcome-message">Hello <?= $_SESSION['username'] ?></a>
-                                <a href="../logout.php">Logout</a>
+                                <a href="logout.php">Logout</a>
                             <?php } else { ?>
+<<<<<<< HEAD
                                 <a href="../admin/login.php" onclick="return loginRedirect()">Login</a>
+=======
+                                <a href="login.php">Login</a>
+>>>>>>> 6bd5fd33cf061aefa0d0bfa2f4567b79dd46c125
                             <?php } ?>
                         </li>
 
