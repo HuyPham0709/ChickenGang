@@ -1,6 +1,7 @@
 <?php
 include('../admin/includes/header.php');
 include('../admin/functions/manage-account.php');
+include('../admin/auth.php');
 ?>
 <!-- Content Row -->
 <div class="row">

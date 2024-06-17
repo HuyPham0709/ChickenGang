@@ -94,7 +94,7 @@ session_start();
 
 
 
-            
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -147,15 +147,21 @@ session_start();
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-
-                            <?php if (isset($_SESSION['username'])) { ?>
+                            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
                                 <a class="welcome-message">Hello <?= $_SESSION['username'] ?></a>
                                 <a href="../logout.php">Logout</a>
                             <?php } else { ?>
-                                <a href="../login.php">Login</a>
+                                <a href="../admin/login.php" onclick="return loginRedirect()">Login</a>
                             <?php } ?>
-                            </a>
                         </li>
+
+                        <script>
+                            function loginRedirect() {
+                                window.location.href = "../admin/login.php";
+                                return false; // Prevent default link action
+                            }
+                        </script>
+
 
                     </ul>
 

@@ -1,6 +1,7 @@
 <?php
 include('../admin/db.php'); // Kết nối CSDL
 include('../admin/includes/header.php'); // Include header file
+include('../admin/auth.php');
 
 // Xử lý xóa đơn hàng nếu có yêu cầu
 if (isset($_GET['delete_id']) && isset($_GET['user_id'])) {

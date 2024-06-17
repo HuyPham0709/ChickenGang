@@ -1,6 +1,7 @@
 <?php
 include('../admin/includes/header.php');
 include('../admin/functions/manage-customer.php');
+include('../admin/auth.php');
 
 // Xử lý khi nhấn submit form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

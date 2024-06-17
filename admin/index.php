@@ -1,26 +1,20 @@
 <?php
 include('../admin/includes/header.php');
 include('../admin/db.php');
+include('../admin/auth.php'); // Include file kiểm tra đăng nhập
+
+
+
 // Hàm escape string an toàn
 function escape_string($con, $value) {
     return $con->real_escape_string($value);
 }
 
-// Lấy danh sách các năm có trong bảng revenue
-$sql_years = "SELECT DISTINCT year FROM revenue ORDER BY year";
-$result_years = $con->query($sql_years);
-
-$years = [];
-if ($result_years->num_rows > 0) {
-    while ($row = $result_years->fetch_assoc()) {
-        $years[] = $row['year'];
-    }
-} else {
-    die("Không có dữ liệu trong bảng doanh thu.");
-}
-
-// Xử lý năm được chọn
-$selected_year = isset($_GET['year']) ? escape_string($con, $_GET['year']) : $years[0];
+// // Kiểm tra xem người dùng đã đăng nhập chưa
+// if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
+//     header("Location: ../admin/index.php"); // Chuyển hướng đến trang đăng nhập
+//     exit(); // Kết thúc kịch bản để ngăn mã tiếp tục thực thi
+// }
 
 // Truy vấn SQL để lấy dữ liệu dựa trên năm đã chọn
 $sql_revenue = "SELECT month, SUM(amount) as total_revenue FROM revenue WHERE year = ? GROUP BY month ORDER BY month";
