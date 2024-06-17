@@ -22,7 +22,7 @@
     $sql = "SELECT p.*, pi.image_path, pi.color 
             FROM Products p
             LEFT JOIN Product_Image pi ON p.id_Product = pi.product_id
-            WHERE p.category = 'item'";
+            WHERE p.category = 'Cap'";
     $result = $conn->query($sql);
 
     // Khởi tạo một mảng để lưu trữ các màu cho mỗi sản phẩm
@@ -65,8 +65,6 @@
                 }
             }
         }
-    } else {
-        echo "Không có dữ liệu trong bảng Products";
     }
     
     // Khai báo biến $css trước khi sử dụng
@@ -166,7 +164,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAZY THINK COLLECTION</title>
+    <title>CAP</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -251,7 +249,7 @@ input:hover {
     <?php include "menu.php"; ?>
     <div class="headweb">
         <!-- Search Form -->
-        <h2  style="font-weight: 200;">ALL ITEM</h2>
+        <h2  style="font-weight: 200;">CAP</h2>
     </div>
     </h2>
     <section class="product-container">

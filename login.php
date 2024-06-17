@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 } elseif($role == "admin") {
                     $_SESSION["role"] = "admin";
                     $_SESSION["username"] = $username;
-                    header("location: adminhome.php");
+                    header("location:./admin/index.php");
                     exit();
                 } else {
                     $login_error = "Username or password incorrect";

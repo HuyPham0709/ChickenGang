@@ -38,9 +38,7 @@ session_start();
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
+                <img src="./img/icon.png" alt="" style="width:50px;">
                 <div class="sidebar-brand-text mx-3">ChickenGang</div>
             </a>
 
@@ -152,9 +150,9 @@ session_start();
 
                             <?php if (isset($_SESSION['username'])) { ?>
                                 <a class="welcome-message">Hello <?= $_SESSION['username'] ?></a>
-                                <a href="logout.php">Logout</a>
+                                <a href="../logout.php">Logout</a>
                             <?php } else { ?>
-                                <a href="login.php">Login</a>
+                                <a href="../login.php">Login</a>
                             <?php } ?>
                             </a>
                         </li>

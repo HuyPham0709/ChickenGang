@@ -65,10 +65,7 @@
                 }
             }
         }
-    } else {
-        echo "Không có dữ liệu trong bảng Products";
     }
-    
     // Khai báo biến $css trước khi sử dụng
     $css = '';
     foreach ($colors as $color) {
@@ -255,75 +252,71 @@ input:hover {
     </div>
     </h2>
     <section class="product-container">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <?php foreach (array_chunk($products, 4) as $productRow): ?>
-                <div class="product-row">
-                    <?php foreach ($productRow as $index => $product): ?>
-                        <div class="product-card">
-                            <input type="hidden" name="products[<?= $index; ?>][id]" value="<?= $product['id']; ?>">
-                            <input type="hidden" name="products[<?= $index; ?>][name]" value="<?= $product['name']; ?>">
-                            <input type="hidden" name="products[<?= $index; ?>][price]" value="<?= $product['price']; ?>">
-                            <input type="hidden" name="products[<?= $index; ?>][color]" id="selected_color_<?= $index; ?>" value="<?= $product['colors'][0] ?? ''; ?>">
-                            <input type="hidden" name="products[<?= $index; ?>][image_path]" id="product_image_<?= $index; ?>" value="<?= $product['images'][$product['colors'][0]] ?? ''; ?>">
-                            <input type="hidden" name="products[<?= $index; ?>][num]" value="1">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="display: flex; flex-wrap: wrap; justify-content: center;">
+            <?php foreach ($products as $index => $product): ?>
+                <div class="product-card" style="margin: 10px">
+                    <input type="hidden" name="products[<?= $index; ?>][id]" value="<?= $product['id']; ?>">
+                    <input type="hidden" name="products[<?= $index; ?>][name]" value="<?= $product['name']; ?>">
+                    <input type="hidden" name="products[<?= $index; ?>][price]" value="<?= $product['price']; ?>">
+                    <input type="hidden" name="products[<?= $index; ?>][color]" id="selected_color_<?= $index; ?>" value="<?= $product['colors'][0] ?? ''; ?>">
+                    <input type="hidden" name="products[<?= $index; ?>][image_path]" id="product_image_<?= $index; ?>" value="<?= $product['images'][$product['colors'][0]] ?? ''; ?>">
+                    <input type="hidden" name="products[<?= $index; ?>][num]" value="1">
 
-                            <div class="logo-cart">
-                                <div class="heart-container" title="like">
-                                    <input type="checkbox" class="checkbox" id="Give-It-An-Id">
-                                    <div class="svg-container">
-                                        <!-- Mã SVG -->
-                                        <svg viewBox="0 0 24 24" class="svg-outline" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
-                                        </svg>
-                                        <svg viewBox="0 0 24 24" class="svg-filled" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
-                                        </svg>
-                                        <svg class="svg-celebrate" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                                            <polygon points="10,10 20,20"></polygon>
-                                            <polygon points="10,50 20,50"></polygon>
-                                            <polygon points="20,80 30,70"></polygon>
-                                            <polygon points="90,10 80,20"></polygon>
-                                            <polygon points="90,50 80,50"></polygon>
-                                            <polygon points="80,80 70,70"></polygon>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <button style="border: none;background-color: transparent;" type="submit" name="add_to_cart_<?= $index; ?>"><i class='bx bx-shopping-bag'></i></button>
-                            </div>
-                            <a href="product_detail.php?id=<?= $product['id']; ?>">
-                                <div class="main-images">
-                                    <?php 
-                                        $firstColor = key($product['images']); // Lấy màu đầu tiên từ mảng images
-                                    ?>
-                                    <?php foreach ($product['images'] as $color => $image): ?>
-                                        <img style="left: 10px;" id="<?= $color; ?>" class="<?= $color === $firstColor ? 'active' : ''; ?>" src="img/<?= $image; ?>" alt="<?= $color; ?>" name="<?= $color; ?>">
-                                    <?php endforeach; ?>
-                                </div>
-                            </a>
-                            <div class="shoe-details">
-                                <span class="shoe_name"><?= $product['name']; ?></span>
-                                <p><?= $product['description']; ?></p>
-                            </div>
-                            <div class="color-price">
-                                <div class="color-option">
-                                    <span class="color">Colour:</span>
-                                    <div class="circles">   
-                                    <?php foreach ($product['colors'] as $color): ?>
-                                        <span class="circle <?= $color === $firstColor ? $color . ' active' : $color; ?>" id="<?= $color; ?>" data-index="<?= $index; ?>" data-color="<?= $color; ?>" style="background-color: <?= $color === 'blue' ? '#0071C7' : ($color === 'pink' ? '#FF76CE' : ($color === 'white' ? '#EEEEEE' : ($color === 'yellow' ? '#F5DA00' : $color))); ?>;"></span>
-                                    <?php endforeach; ?>
-                                    </div>
-                                </div>
-                                <div class="price">
-                                    <span class="price_num"><?= $product['price']; ?></span>
-                                    <span class="price_letter">Just <?= $product['price']; ?>$ only</span>
-                                </div>
-                            </div>
-                            <div class="button">
-                                <div class="button-layer"></div>
-                                <button type="submit" name="add_to_cart_<?= $index; ?>">Add to cart</button>
+                    <div class="logo-cart">
+                        <div class="heart-container" title="like">
+                            <input type="checkbox" class="checkbox" id="Give-It-An-Id">
+                            <div class="svg-container">
+                                <!-- Mã SVG -->
+                                <svg viewBox="0 0 24 24" class="svg-outline" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
+                                </svg>
+                                <svg viewBox="0 0 24 24" class="svg-filled" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
+                                </svg>
+                                <svg class="svg-celebrate" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="10,10 20,20"></polygon>
+                                    <polygon points="10,50 20,50"></polygon>
+                                    <polygon points="20,80 30,70"></polygon>
+                                    <polygon points="90,10 80,20"></polygon>
+                                    <polygon points="90,50 80,50"></polygon>
+                                    <polygon points="80,80 70,70"></polygon>
+                                </svg>
                             </div>
                         </div>
-                    <?php endforeach; ?>
+                        <button style="border: none;background-color: transparent;" type="submit" name="add_to_cart_<?= $index; ?>"><i class='bx bx-shopping-bag'></i></button>
+                    </div>
+                    <a href="product_detail.php?id=<?= $product['id']; ?>">
+                        <div class="main-images">
+                            <?php 
+                                $firstColor = key($product['images']); // Lấy màu đầu tiên từ mảng images
+                            ?>
+                            <?php foreach ($product['images'] as $color => $image): ?>
+                                <img style="left: 10px;" id="<?= $color; ?>" class="<?= $color === $firstColor ? 'active' : ''; ?>" src="img/<?= $image; ?>" alt="<?= $color; ?>" name="<?= $color; ?>">
+                            <?php endforeach; ?>
+                        </div>
+                    </a>
+                    <div class="shoe-details">
+                        <span class="shoe_name"><?= $product['name']; ?></span>
+                        <p><?= $product['description']; ?></p>
+                    </div>
+                    <div class="color-price">
+                        <div class="color-option">
+                            <span class="color">Colour:</span>
+                            <div class="circles">   
+                            <?php foreach ($product['colors'] as $color): ?>
+                                <span class="circle <?= $color === $firstColor ? $color . ' active' : $color; ?>" id="<?= $color; ?>" data-index="<?= $index; ?>" data-color="<?= $color; ?>" style="background-color: <?= $color === 'blue' ? '#0071C7' : ($color === 'pink' ? '#FF76CE' : ($color === 'white' ? '#EEEEEE' : ($color === 'yellow' ? '#F5DA00' : $color))); ?>;"></span>
+                            <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div class="price">
+                            <span class="price_num"><?= $product['price']; ?></span>
+                            <span class="price_letter">Just <?= $product['price']; ?>$ only</span>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <div class="button-layer"></div>
+                        <button type="submit" name="add_to_cart_<?= $index; ?>">Add to cart</button>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </form>

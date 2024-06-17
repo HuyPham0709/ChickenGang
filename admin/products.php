@@ -110,7 +110,7 @@ include('../admin/functions/manage-products.php');
                                 echo "<td>" . $row["price"] . "</td>";
                                 // Kiểm tra nếu có dữ liệu từ bảng Product_Image
                                 if ($row_image !== null) {
-                                    echo "<td><img src='" . $row_image["image_path"] . "' width='50' height='50'></td>";
+                                    echo "<td><img src='../img/" . $row_image["image_path"] . "' width='50' height='50'></td>";
                                     echo "<td>" . $row_image["color"] . "</td>";
                                 } else {
                                     echo "<td></td>"; // Nếu không có ảnh

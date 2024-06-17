@@ -182,10 +182,10 @@
                     <a href="" class="menu_link">SHOP</a><i class='bx bxs-down-arrow'></i>
                     <div class="menu_child">
                         <ul class="menu_child-list">
-                            <li><a href=""><button class="cssbuttons-io"><span>BEST SELLER</span></button></a></li>
-                            <li><a href="./Item.php"><button class="cssbuttons-io"><span>ALL ITEM</span></button></a></li>
+                            <li><a href="./hoodie.php"><button class="cssbuttons-io"><span>HOODIE</span></button></a></li>
+                            <li><a href="./cap.php"><button class="cssbuttons-io"><span>CAP</span></button></a></li>
                             <li><a href="./shirt.php"><button class="cssbuttons-io"><span>SHIRT</span></button></a></li>
-                            <li><a href=""><button class="cssbuttons-io"><span>OUTERWEAR</span></button></a></li>
+                            <li><a href="./sweatsuit.php"><button class="cssbuttons-io"><span>SWEATSUIT</span></button></a></li>
                         </ul>
                     </div>
                 </li>
