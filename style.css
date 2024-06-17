@@ -411,7 +411,6 @@ header .navigation .navigation-items a:hover:before{
     width: 160px;
     height: 50px;
   }
-  
   .cssbuttons-io::before,
   .cssbuttons-io::after {
     position: absolute;
@@ -421,7 +420,6 @@ header .navigation .navigation-items a:hover:before{
     height: 100%;
     z-index: 0;
   }
-  
   .cssbuttons-io::before {
     content: "";
     background-color: white;
@@ -439,7 +437,7 @@ header .navigation .navigation-items a:hover:before{
     transform: scale(0.95);
   } 
   .product-container{
-    margin: 100px;
+    margin: 150px;
     
   }
   .product-card{
@@ -1600,7 +1598,9 @@ form.sign-in-form-login {
     bottom: 72%;
     left: 50%;
   }
-
+  .product-container{
+    margin: 20px;
+  }
   .container-login.sign-up-mode-login:before {
     bottom: 28%;
     left: 50%;

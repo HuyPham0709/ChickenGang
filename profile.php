@@ -198,7 +198,7 @@ while ($row = mysqli_fetch_assoc($result_cart)) {
 
         .edit {
             position: absolute;
-            color: #e7e7e8;
+            color: #333;
             right: 14%;
         }
 
