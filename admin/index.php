@@ -1,33 +1,17 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE);
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: /path/to/login_page.php"); // Chuyển hướng đến trang đăng nhập hoặc trang khác
+    exit();
+}
+
 include('../admin/includes/header.php');
 include('../admin/db.php');
-// Hàm escape string an toàn
-function escape_string($con, $value) {
-    return $con->real_escape_string($value);
-}
-
-// Lấy danh sách các năm có trong bảng revenue
-$sql_years = "SELECT DISTINCT year FROM revenue ORDER BY year";
-$result_years = $con->query($sql_years);
-
-$years = [];
-if ($result_years->num_rows > 0) {
-    while ($row = $result_years->fetch_assoc()) {
-        $years[] = $row['year'];
-    }
-} else {
-    die("Không có dữ liệu trong bảng doanh thu.");
-}
-
-// Xử lý năm được chọn
-$selected_year = isset($_GET['year']) ? escape_string($con, $_GET['year']) : $years[0];
-
-// Truy vấn SQL để lấy dữ liệu dựa trên năm đã chọn
-$sql_revenue = "SELECT month, SUM(amount) as total_revenue FROM revenue WHERE year = ? GROUP BY month ORDER BY month";
-$stmt = $con->prepare($sql_revenue);
-$stmt->bind_param('s', $selected_year);
-$stmt->execute();
-$result = $stmt->get_result();
 
 // Truy vấn tổng số người dùng đã đăng nhập
 $sql_total_users = "SELECT COUNT(*) AS total_users FROM login";
@@ -68,7 +52,6 @@ $stmt_revenue->bind_param("i", $selected_year);
 $stmt_revenue->execute();
 $result_revenue = $stmt_revenue->get_result();
 
-
 $months = [];
 $revenues = [];
 
@@ -78,25 +61,9 @@ if ($result_revenue->num_rows > 0) {
         $revenues[] = $row['revenue'];
     }
 } else {
-
-    echo "Không có kết quả!";
-}
-
-$stmt->close();
-
-// Hàm cập nhật hoặc thêm dữ liệu vào bảng revenue từ bảng cart
-function updateRevenueFromCart($con) {
-    $sql_update = "INSERT INTO revenue (id_cart, month, year, amount)
-                   SELECT id_Cart, MONTH(order_date) AS month, YEAR(order_date) AS year, SUM(total_money) AS total_amount
-                   FROM cart
-                   GROUP BY MONTH(order_date), YEAR(order_date), id_Cart
-                   ON DUPLICATE KEY UPDATE amount = VALUES(amount)";
-    if (!$con->query($sql_update)) {
-        echo "Lỗi: " . $con->error;
-
     echo "Không có kết quả.";
 }
-}
+
 $stmt_revenue->close();
 
 // Truy vấn dữ liệu số lượng sản phẩm theo collection
@@ -117,16 +84,10 @@ if ($result_collection->num_rows > 0) {
     while ($row = $result_collection->fetch_assoc()) {
         $collections[] = $row['collection'];
         $quantities[] = $row['total_quantity'];
-
     }
 } else {
     echo "Không có kết quả.";
 }
-
-
-// Gọi hàm cập nhật dữ liệu từ bảng cart vào bảng revenue
-updateRevenueFromCart($con);
-
 
 $con->close();
 
@@ -136,7 +97,6 @@ $revenues_json = json_encode($revenues);
 $collections_json = json_encode($collections);
 $quantities_json = json_encode($quantities);
 ?>
-
 <div class="row">
     <!-- Tổng số lượng người dùng đã đăng nhập -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -198,9 +158,6 @@ $quantities_json = json_encode($quantities);
     <div class="col-xl-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-
-                <h6 class="m-0 font-weight-bold text-primary">Tổng Quan Doanh Thu cho <?php echo $selected_year; ?></h6>
-=======
                 <h6 class="m-0 font-weight-bold text-primary">Tổng Doanh Thu Theo Tháng <?php echo $selected_year; ?></h6>
             </div>
             <div class="card-body">
@@ -218,7 +175,6 @@ $quantities_json = json_encode($quantities);
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Số Lượng Sản Phẩm Theo Collection</h6>
-
             </div>
             <div class="card-body">
                 <div class="chart-area">
@@ -264,7 +220,6 @@ $quantities_json = json_encode($quantities);
                     title: {
                         display: true,
                         text: 'Tổng Doanh Thu (VND)'
-
                     }
                 }
             }
@@ -308,4 +263,5 @@ $quantities_json = json_encode($quantities);
         }
     });
 </script>
+
 <?php include('../admin/includes/footer.php'); ?>
