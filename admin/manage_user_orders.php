@@ -1,7 +1,6 @@
 <?php
 include('../admin/db.php'); // Kết nối CSDL
 include('../admin/includes/header.php'); // Include header file
-include('../admin/auth.php');
 
 // Xử lý cập nhật trạng thái đơn hàng nếu có yêu cầu
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['new_status']) && isset($_POST['order_id'])) {

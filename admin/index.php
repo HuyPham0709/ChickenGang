@@ -12,30 +12,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 
 include('../admin/includes/header.php');
 include('../admin/db.php');
-<<<<<<< HEAD
-include('../admin/auth.php'); // Include file kiểm tra đăng nhập
-
-
-
-// Hàm escape string an toàn
-function escape_string($con, $value) {
-    return $con->real_escape_string($value);
-}
-
-// // Kiểm tra xem người dùng đã đăng nhập chưa
-// if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
-//     header("Location: ../admin/index.php"); // Chuyển hướng đến trang đăng nhập
-//     exit(); // Kết thúc kịch bản để ngăn mã tiếp tục thực thi
-// }
-
-// Truy vấn SQL để lấy dữ liệu dựa trên năm đã chọn
-$sql_revenue = "SELECT month, SUM(amount) as total_revenue FROM revenue WHERE year = ? GROUP BY month ORDER BY month";
-$stmt = $con->prepare($sql_revenue);
-$stmt->bind_param('s', $selected_year);
-$stmt->execute();
-$result = $stmt->get_result();
-=======
->>>>>>> 6bd5fd33cf061aefa0d0bfa2f4567b79dd46c125
 
 // Truy vấn tổng số người dùng đã đăng nhập
 $sql_total_users = "SELECT COUNT(*) AS total_users FROM login";

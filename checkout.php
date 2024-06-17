@@ -41,8 +41,8 @@ if (isset($_POST['checkout'])) {
             $total_money = $price * $quantity;
             
             // Thêm thông tin đơn hàng vào bảng Cart với total_money của từng sản phẩm
-            $insert_order_query = "INSERT INTO Cart (user_id, product_name, price, quantity, order_date, status, total_money, color)
-                       VALUES ('$user_id', '$product_name', '$price', '$quantity', NOW(), 0, '$total_money', '$color')";
+            $insert_order_query = "INSERT INTO Cart (user_id, product_name, price, quantity, order_date, total_money, color)
+                       VALUES ('$user_id', '$product_name', '$price', '$quantity', NOW(), '$total_money', '$color')";
         
             mysqli_query($conn, $insert_order_query);
         }

@@ -1,7 +1,6 @@
 <?php
 include('../admin/includes/header.php');
 include('../admin/functions/manage-products.php');
-include('../admin/auth.php');
 ?>
 
 <!-- Content Row -->
