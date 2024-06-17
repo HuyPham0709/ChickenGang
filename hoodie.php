@@ -221,18 +221,6 @@ input:hover {
       justify-content:space-between;
       align-items:flex-end;
     }
-    .product-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .product-card {
-            flex: 1 1 calc(25% - 20px); /* Adjust the width of each product card */
-            margin: 10px;
-            box-sizing: border-box;
-        }
 @media screen and (max-width: 1040px){
     .headweb{
         display: block;

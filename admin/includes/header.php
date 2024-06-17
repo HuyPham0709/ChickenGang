@@ -152,7 +152,7 @@ session_start();
 
                             <?php if (isset($_SESSION['username'])) { ?>
                                 <a class="welcome-message">Hello <?= $_SESSION['username'] ?></a>
-                                <a href="logout.php">Logout</a>
+                                <a href="../logout.php">Logout</a>
                             <?php } else { ?>
                                 <a href="login.php">Login</a>
                             <?php } ?>

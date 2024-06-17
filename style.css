@@ -1580,6 +1580,9 @@ form.sign-in-form-login {
 }
 
 @media (max-width: 570px) {
+  .product-container{
+    margin: 20px;
+  }
   form-login {
     padding: 0 1.5rem;
   }
@@ -1597,9 +1600,6 @@ form.sign-in-form-login {
   .container-login:before {
     bottom: 72%;
     left: 50%;
-  }
-  .product-container{
-    margin: 20px;
   }
   .container-login.sign-up-mode-login:before {
     bottom: 28%;
