@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: /path/to/login_page.php"); // Chuyển hướng đến trang đăng nhập hoặc trang khác
+    header("Location:404.php"); // Chuyển hướng đến trang đăng nhập hoặc trang khác
     exit();
 }
 
