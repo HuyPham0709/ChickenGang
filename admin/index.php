@@ -1,8 +1,6 @@
 <?php
 include('../admin/includes/header.php');
 include('../admin/db.php');
-
-<<<<<<< HEAD
 // Hàm escape string an toàn
 function escape_string($con, $value) {
     return $con->real_escape_string($value);
@@ -30,7 +28,7 @@ $stmt = $con->prepare($sql_revenue);
 $stmt->bind_param('s', $selected_year);
 $stmt->execute();
 $result = $stmt->get_result();
-=======
+
 // Truy vấn tổng số người dùng đã đăng nhập
 $sql_total_users = "SELECT COUNT(*) AS total_users FROM login";
 $result_total_users = $con->query($sql_total_users);
@@ -69,7 +67,7 @@ $stmt_revenue = $con->prepare($sql_revenue);
 $stmt_revenue->bind_param("i", $selected_year);
 $stmt_revenue->execute();
 $result_revenue = $stmt_revenue->get_result();
->>>>>>> 78779408dcc05789d282831a969eee6167ac9c9e
+
 
 $months = [];
 $revenues = [];
@@ -80,7 +78,7 @@ if ($result_revenue->num_rows > 0) {
         $revenues[] = $row['revenue'];
     }
 } else {
-<<<<<<< HEAD
+
     echo "Không có kết quả!";
 }
 
@@ -95,10 +93,10 @@ function updateRevenueFromCart($con) {
                    ON DUPLICATE KEY UPDATE amount = VALUES(amount)";
     if (!$con->query($sql_update)) {
         echo "Lỗi: " . $con->error;
-=======
+
     echo "Không có kết quả.";
 }
-
+}
 $stmt_revenue->close();
 
 // Truy vấn dữ liệu số lượng sản phẩm theo collection
@@ -119,18 +117,17 @@ if ($result_collection->num_rows > 0) {
     while ($row = $result_collection->fetch_assoc()) {
         $collections[] = $row['collection'];
         $quantities[] = $row['total_quantity'];
->>>>>>> 78779408dcc05789d282831a969eee6167ac9c9e
+
     }
 } else {
     echo "Không có kết quả.";
 }
 
-<<<<<<< HEAD
+
 // Gọi hàm cập nhật dữ liệu từ bảng cart vào bảng revenue
 updateRevenueFromCart($con);
 
-=======
->>>>>>> 78779408dcc05789d282831a969eee6167ac9c9e
+
 $con->close();
 
 // Chuyển đổi dữ liệu thành JSON
@@ -201,7 +198,7 @@ $quantities_json = json_encode($quantities);
     <div class="col-xl-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-<<<<<<< HEAD
+
                 <h6 class="m-0 font-weight-bold text-primary">Tổng Quan Doanh Thu cho <?php echo $selected_year; ?></h6>
 =======
                 <h6 class="m-0 font-weight-bold text-primary">Tổng Doanh Thu Theo Tháng <?php echo $selected_year; ?></h6>
@@ -221,7 +218,7 @@ $quantities_json = json_encode($quantities);
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Số Lượng Sản Phẩm Theo Collection</h6>
->>>>>>> 78779408dcc05789d282831a969eee6167ac9c9e
+
             </div>
             <div class="card-body">
                 <div class="chart-area">
@@ -267,8 +264,7 @@ $quantities_json = json_encode($quantities);
                     title: {
                         display: true,
                         text: 'Tổng Doanh Thu (VND)'
-<<<<<<< HEAD
-=======
+
                     }
                 }
             }
@@ -306,12 +302,10 @@ $quantities_json = json_encode($quantities);
                     title: {
                         display: true,
                         text: 'Số Lượng Sản Phẩm'
->>>>>>> 78779408dcc05789d282831a969eee6167ac9c9e
                     }
                 }
             }
         }
     });
 </script>
-
 <?php include('../admin/includes/footer.php'); ?>
