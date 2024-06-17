@@ -41,7 +41,7 @@ include 'connect.php';
         <video class="video-slide" src="./img/5.mp4" autoplay muted loop></video>
         <div class="home-content active">
             <h1>clothing.<br><span>Shop</span></h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime alias natus, nam doloribus quas non nemo rerum quam magnam reprehenderit ratione. Enim dicta velit provident doloribus asperiores obcaecati incidunt excepturi.</p>
+            <p>Khám phá không gian thời trang hiện đại, nơi bạn được tạo dựng phong cách riêng biệt và thể hiện cá tính độc đáo của mình trong mỗi bước chân, mỗi lựa chọn trang phục.</p>
             <div class="button-light">
                 <a href="">
                     <span></span>
@@ -180,7 +180,7 @@ include 'connect.php';
                     <div class="img-box"><img src="https://images.pexels.com/photos/842963/pexels-photo-842963.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></div>
                     <div class="custom-content">
                         <h2>LIVE</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto, hic? Magnam eum error saepe doloribus corrupti repellat quisquam alias doloremque!</p>
+                        <p>Hãy đắm chìm trong thế giới thời trang đầy sáng tạo, nơi những ý tưởng mới luôn được thúc đẩy và phong cách cá nhân được tôn vinh.</p>
                         <a href="">Read More</a>
                     </div>
                     </div>
@@ -188,7 +188,7 @@ include 'connect.php';
                     <div class="img-box"><img src="https://levents.asia/cdn/shop/files/homepage-ngang-4-1920x988_1.jpg?v=1699932491&width=750"></div>
                     <div class="custom-content">
                         <h2>LOVE</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto, hic? Magnam eum error saepe doloribus corrupti repellat quisquam alias doloremque!</p>
+                        <p>Với tình yêu không giới hạn đối với thời trang, chúng tôi mang đến cho bạn những trải nghiệm mua sắm đầy cảm xúc và sự sáng tạo.</p>
                         <a href="">Read More</a>
                     </div>
                     </div>
@@ -196,7 +196,7 @@ include 'connect.php';
                     <div class="img-box"><img src="https://levents.asia/cdn/shop/files/collection-summer-banner.jpg?v=1699932238&width=2000"></div>
                     <div class="custom-content">
                         <h2>CHANGE</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto, hic? Magnam eum error saepe doloribus corrupti repellat quisquam alias doloremque!</p>
+                        <p>Tự tin bước vào không gian thời trang đa chiều, nơi mỗi trải nghiệm mua sắm trở thành cuộc phiêu lưu tìm kiếm phong cách thật sự của bạn.</p>
                         <a href="">Read More</a>
                     </div>
             </div>
