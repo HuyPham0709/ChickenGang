@@ -7,36 +7,15 @@ function sanitize_input($input) {
     return $con->real_escape_string(trim($input));
 }
 
-// Hàm thêm khách hàng mới
-function addCustomer($username, $email, $phone_number, $address, $login_id) {
-    global $con;
-    $username = sanitize_input($username);
-    $email = sanitize_input($email);
-    $phone_number = sanitize_input($phone_number);
-    $address = sanitize_input($address);
-    $login_id = (int)$login_id; // Đảm bảo rằng login_id là một số nguyên
-
-    $stmt = $con->prepare("INSERT INTO Customer (username, email, phone_number, address, login_id) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssi", $username, $email, $phone_number, $address, $login_id);
-
-    if ($stmt->execute() === TRUE) {
-        return true;
-    } else {
-        return "Lỗi: " . $stmt->error;
-    }
-
-    $stmt->close();
-}
 
 // Hàm cập nhật thông tin khách hàng
-function updateCustomer($id, $username, $email, $phone_number, $address, $login_id) {
+function updateCustomer($id, $username, $email, $phone_number, $address) {
     global $con;
     $id = (int)$id;
     $username = sanitize_input($username);
     $email = sanitize_input($email);
     $phone_number = sanitize_input($phone_number);
     $address = sanitize_input($address);
-    $login_id = (int)$login_id; // Đảm bảo rằng login_id là một số nguyên
 
     $stmt = $con->prepare("UPDATE Customer SET username=?, email=?, phone_number=?, address=?, login_id=? WHERE id_User=?");
     $stmt->bind_param("ssssii", $username, $email, $phone_number, $address, $login_id, $id);
@@ -49,6 +28,8 @@ function updateCustomer($id, $username, $email, $phone_number, $address, $login_
 
     $stmt->close();
 }
+
+
 
 // Hàm xóa khách hàng
 function deleteCustomer($delete_id) {
@@ -66,6 +47,7 @@ function deleteCustomer($delete_id) {
 
     $stmt->close();
 }
+
 
 // Hàm lấy danh sách khách hàng
 function getCustomer() {
@@ -85,6 +67,7 @@ function getCustomer() {
 }
 
 // Hàm lấy thông tin khách hàng theo ID
+// Hàm lấy thông tin khách hàng theo ID
 function getCustomerById($id) {
     global $con;
     $id = (int)$id;
@@ -101,4 +84,5 @@ function getCustomerById($id) {
         return false;
     }
 }
+
 ?>

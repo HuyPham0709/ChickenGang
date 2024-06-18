@@ -1,16 +1,21 @@
 <?php
+session_start(); // Bắt đầu session nếu bạn muốn lấy user_id từ session
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "chickengang";
 
-// Create connection
+// Tạo kết nối
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// Check connection
+// Kiểm tra kết nối
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
+
+// Giả sử bạn đã lưu user_id trong session khi người dùng đăng nhập
+$user_id = $_SESSION['user_id'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,38 +94,50 @@ if (!$conn) {
     </form>
 
     <?php
-    include 'db.php';
-
-    // Handle feedback form submission
+    // Xử lý form gửi phản hồi
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['message'])) {
             $name = $conn->real_escape_string($_POST['name']);
             $email = $conn->real_escape_string($_POST['email']);
             $message = $conn->real_escape_string($_POST['message']);
 
-            $sql = "INSERT INTO Feedback1 (name, email, message) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss", $name, $email, $message);
+            // Kiểm tra nếu người dùng tồn tại
+            $user_check_sql = "SELECT id_User FROM customer WHERE id_User = ?";
+            $user_check_stmt = $conn->prepare($user_check_sql);
+            $user_check_stmt->bind_param("i", $user_id);
+            $user_check_stmt->execute();
+            $user_check_stmt->store_result();
 
-            if ($stmt->execute()) {
-                echo "<p>Feedback submitted successfully</p>";
+            if ($user_check_stmt->num_rows > 0) {
+                // Người dùng tồn tại, thực thi chèn phản hồi
+                $sql = "INSERT INTO feedback1 (user_id, name, email, message) VALUES (?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("isss", $user_id, $name, $email, $message);
+
+                if ($stmt->execute()) {
+                    echo "<p>Feedback submitted successfully</p>";
+                } else {
+                    echo "Error: " . $stmt->error;
+                }
+
+                $stmt->close();
             } else {
-                echo "Error: " . $stmt->error;
+                echo "Error: User ID does not exist.";
             }
 
-            $stmt->close();
+            $user_check_stmt->close();
         } else {
             echo "Please fill out all fields.";
         }
     }
 
-    // Retrieve feedbacks
-    $sql = "SELECT name, email, message, created_at FROM Feedback1 ORDER BY created_at DESC";
+    // Lấy phản hồi
+    $sql = "SELECT name, email, message, created_at FROM feedback1 ORDER BY created_at DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         echo "<h2>Feedbacks</h2>";
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             echo "<div class='feedback'>";
             echo "<p><strong>Name:</strong> " . htmlspecialchars($row["name"]) . "</p>";
             echo "<p><strong>Email:</strong> " . htmlspecialchars($row["email"]) . "</p>";

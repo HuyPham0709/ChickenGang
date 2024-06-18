@@ -48,7 +48,7 @@ include('../admin/functions/manage-products.php');
                         <label for="image_path">Ảnh</label>
                         <input type="file" class="form-control-file" id="image_path" name="image_path">
                         <?php if (isset($product_image['image_path'])) : ?>
-                            <img src="<?php echo $product_image['image_path']; ?>" width="100" height="100" alt="">
+                            <img src="../img/<?php echo $product_image['image_path']; ?>" width="100" height="100" alt="">
                         <?php endif; ?>
                     </div>
 
@@ -110,7 +110,7 @@ include('../admin/functions/manage-products.php');
                                 echo "<td>" . $row["price"] . "</td>";
                                 // Kiểm tra nếu có dữ liệu từ bảng Product_Image
                                 if ($row_image !== null) {
-                                    echo "<td><img src='" . $row_image["image_path"] . "' width='50' height='50'></td>";
+                                    echo "<td><img src='../img/" . $row_image["image_path"] . "' width='50' height='50'></td>";
                                     echo "<td>" . $row_image["color"] . "</td>";
                                 } else {
                                     echo "<td></td>"; // Nếu không có ảnh
